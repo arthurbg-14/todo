@@ -18,7 +18,9 @@ export default function Home() {
       return
     }
 
-    e.target.innerHTML = "Loading"
+    const target = e.target as Element
+
+    target.innerHTML = "Loading"
     router.push(`/todos/${username}`)
   }
 
