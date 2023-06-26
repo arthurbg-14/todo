@@ -7,7 +7,7 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps(context: GetStaticPropsContext) {
+export async function getStaticProps(context: any) {
   await new Promise(r => setTimeout(r, 5000))
   
   return {
