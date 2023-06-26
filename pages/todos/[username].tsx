@@ -9,10 +9,12 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context: any) {
   await new Promise(r => setTimeout(r, 5000))
+
+  const username: string = context.params.username
   
   return {
     props: {
-      username: context.params.username
+      username: username
     }
   }
 }
