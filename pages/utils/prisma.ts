@@ -3,13 +3,8 @@ import { PrismaClient } from '@prisma/client'
 let prisma: any
 
 declare global {
-  namespace NodeJS {
-    interface Global {
-      prisma: PrismaClient;
-    }
-  }
+  var prisma: PrismaClient;
 }
-
 
 if (process.env.NODE_ENV === 'production') {
   prisma = new PrismaClient()
