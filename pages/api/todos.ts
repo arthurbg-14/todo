@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import type { Todo } from '../../types/Todo'
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -22,11 +22,7 @@ export default async function handler(
 	}
 
 	const todos = await prisma.todo.findMany({
-		where: {
-			createdBy: {
-      	equals: createdBy,
-			}
-		}}
+		where: {createdBy}}
 	)
 
 	return res.status(200).json({todos, message: "Success"})
