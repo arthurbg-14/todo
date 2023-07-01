@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import Todo from './todo'
+import Todo from '../../components/Todo'
 
 export default function Todos() {
     const router = useRouter()
