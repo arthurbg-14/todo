@@ -22,7 +22,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<{
   todos: Todo[]
 }> = async (context: any) => {
-  const res = await fetch(process.env.VERCEL_URL+'/api/todos?username='+context.params.username)
+  const res = await fetch('https://'+process.env.VERCEL_URL+'/api/todos?username='+context.params.username)
   const json = await res.json()
 
   return { props: { todos: json.todos } }
@@ -40,7 +40,6 @@ export default function Page(props: {todos: Todo[]}) {
       fetch('/api/todos?username=' + router.query.username).then(res => {
         res.json().then(json => {
           setTodos(json.todos)
-          console.log("setTodos")
         })
       })
     }
