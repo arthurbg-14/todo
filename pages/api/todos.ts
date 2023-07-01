@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../utils/prisma'
 import type { Todo } from '../../types/Todo'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 type ResData = {
 	todos: Array<Todo>

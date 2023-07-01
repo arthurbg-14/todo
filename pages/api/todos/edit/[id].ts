@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import prisma from "../../../utils/prisma"
 import type { Todo } from "../../../../types/Todo"
 import Joi from 'joi'
 import { createToDo } from "../new"
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 type ResData = {
 	todo?: Todo,
