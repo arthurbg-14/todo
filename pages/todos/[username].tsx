@@ -2,45 +2,47 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import TodoComponent from '../../components/Todo'
 import type { Todo } from '../../types/Todo'
-import type {
-  GetStaticProps,
-  GetStaticPaths,
-  GetStaticPropsContext,
-} from 'next'
- 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [
-      {params: {
-        username: "bolsonaro"
-      }}
-    ],
-    fallback: true,
-  }
-}
- 
-export const getStaticProps: GetStaticProps<{
-  todos: Todo[]
-}> = async (context: any) => {
-  const res = await fetch('https://'+process.env.VERCEL_URL+'/api/todos?username='+context.params.username)
-  const json = await res.json()
-  console.log(json)
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
+import { PrismaClient } from '@prisma/client'
 
-  return { props: { todos: json.todos } }
+export const getServerSideProps: GetServerSideProps<{
+  todos: Todo[]
+}> = async (ctx) => {
+
+  if (typeof ctx.query.username != "string"){
+    return {redirect: {
+      destination: '/',
+      permanent: false,
+    },}
+  }
+
+  const prisma = new PrismaClient()
+
+  const todos = await prisma.todo.findMany({
+		where: {createdBy:{equals: ctx.query.username}},
+		orderBy: [
+				{
+					name: 'desc',
+				},
+			]
+		})
+
+  return { props: { todos: JSON.parse(JSON.stringify(todos))} }
 }
+
 
 export default function Page(props: {todos: Todo[]}) {
     const router = useRouter()
-    let [todos, setTodos] = useState<Todo[]>(props.todos)
     
-    if (!router.query.username) {
-      return
-    }
+    let [todos, setTodos] = useState<Todo[]>(props.todos)
+
+    if (!router.query.username){return}
 
     function getToDos(){
       fetch('/api/todos?username=' + router.query.username).then(res => {
         res.json().then(json => {
           setTodos(json.todos)
+          console.log("apicall")
         })
       })
     }
