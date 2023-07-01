@@ -23,6 +23,7 @@ export const getStaticProps: GetStaticProps<{
   todos: Todo[]
 }> = async (context: any) => {
   const res = await fetch('https://'+process.env.VERCEL_URL+'/api/todos?username='+context.params.username)
+  console.log(res)
   const json = await res.json()
 
   return { props: { todos: json.todos } }
