@@ -23,11 +23,6 @@ export default async function handler(
 
 	const todos = await prisma.todo.findMany({
 		where: {createdBy:{equals: createdBy}},
-		orderBy: [
-				{
-					name: 'desc',
-				},
-			]
 		}
 	)
 

@@ -114,7 +114,9 @@ export function TodoComponent(props: {todo: Todo, updateToDos: Function}) {
 
 		fetch("/api/todos/delete/" + id, {
 			method: "DELETE"
-		}).then(res => props.updateToDos())
+		})
+
+    element.remove()
 	}
 
 	return (
