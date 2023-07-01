@@ -12,7 +12,9 @@ datasource db {
 
 model Todo {
   id        Int      @id @default(autoincrement())
-  name      String   @unique
-  data      String   @unique
+  name      String
+  data      String
+  checked   Boolean
+  createdBy String
   createdAt DateTime @default(now())
 }
