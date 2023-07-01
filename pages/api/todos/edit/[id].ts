@@ -29,7 +29,7 @@ export default function handler
 		checked: Joi.boolean(),
 	})
 
-	const { error, value } = todoSchema.validate(req.body);
+	const { error, value } = todoSchema.validate(JSON.parse(req.body));
 
 	if (error){
 		return res.status(400).json({message: JSON.stringify(error.details)})

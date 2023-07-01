@@ -22,7 +22,13 @@ export default async function handler(
 	}
 
 	const todos = await prisma.todo.findMany({
-		where: {createdBy:{equals: createdBy}}}
+		where: {createdBy:{equals: createdBy}},
+		orderBy: [
+				{
+					name: 'desc',
+				},
+			]
+		}
 	)
 
 	return res.status(200).json({todos, message: "Success"})
