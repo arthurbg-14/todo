@@ -2,6 +2,47 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { Todo } from "../../../../types/Todo"
 import { PrismaClient } from '@prisma/client'
 
+/**
+ * @swagger
+ * /api/todos/delete/{id}:
+ *   delete:
+ *     description: Delete a to do by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the to do
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: To do deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 todo:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     name:
+ *                       type: string
+ *                     data:
+ *                       type: string
+ *                     checked:
+ *                       type: boolean
+ *                     createdBy:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                 message:
+ *                   type: string
+ */
+
+
 const prisma = new PrismaClient()
 
 type ResData = {

@@ -4,6 +4,59 @@ import Joi from 'joi'
 import { createToDo } from "../new"
 import { PrismaClient } from '@prisma/client'
 
+/**
+ * @swagger
+ * /api/todos/edit/{id}:
+ *   put:
+ *     description: Edit a to do by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the to do
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               data:
+ *                 type: string
+ *               checked:
+ *                 type: boolean
+ *     responses:
+ *       200:
+ *         description: To do updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 todo:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: integer
+ *                     name:
+ *                       type: string
+ *                     data:
+ *                       type: string
+ *                     checked:
+ *                       type: boolean
+ *                     createdBy:
+ *                       type: string
+ *                     createdAt:
+ *                       type: string
+ *                       format: date-time
+ *                 message:
+ *                   type: string
+ */
+
 const prisma = new PrismaClient()
 
 type ResData = {
@@ -29,7 +82,11 @@ export default function handler
 		checked: Joi.boolean(),
 	})
 
-	const { error, value } = todoSchema.validate(JSON.parse(req.body));
+	try{
+		req.body = JSON.parse(req.body)
+	}catch(e){}
+
+	const { error, value } = todoSchema.validate(req.body);
 
 	if (error){
 		return res.status(400).json({message: JSON.stringify(error.details)})
