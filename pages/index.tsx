@@ -26,7 +26,7 @@ export default function Home(props: any) {
 
   return (
     <>
-      <div className="bg-lime-400 text-black w-[100vw] h-full flex flex-col items-center justify-center relative">
+      <div className="bg-lime-400 text-black w-[100vw] h-[100vh] flex flex-col items-center justify-center relative">
         <input className="p-2 border-2 rounded border-black shadow-[4px_4px_rgba(1,1,1,1)]" type="text" placeholder="Username" onChange={handleChange}/>
         <span className="mt-2 text-red-700 text-md font-bold">{error}</span>
         <button onClick={handleClick}
